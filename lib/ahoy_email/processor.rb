@@ -16,7 +16,7 @@ module AhoyEmail
           @ahoy_message = AhoyEmail.message_model.new
           ahoy_message.token = generate_token
           ahoy_message.to = Array(message.to).join(", ") if ahoy_message.respond_to?(:to=)
-          ahoy_message.user = options[:user]
+          ahoy_message.account = options[:account]
 
           track_open if options[:open]
           track_links if options[:utm_params] || options[:click]

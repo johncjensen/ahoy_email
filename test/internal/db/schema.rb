@@ -2,10 +2,10 @@ ActiveRecord::Schema.define do
   create_table :ahoy_messages, force: true do |t|
     t.string :token
 
-    # user
+    # account
     t.text :to
-    t.integer :user_id
-    t.string :user_type
+    t.integer :account_id
+    t.string :account_type
 
     # optional - feel free to remove
     t.string :mailer
@@ -26,5 +26,5 @@ ActiveRecord::Schema.define do
   end
 
   add_index :ahoy_messages, [:token]
-  add_index :ahoy_messages, [:user_id, :user_type]
+  add_index :ahoy_messages, [:account_id, :account_type]
 end

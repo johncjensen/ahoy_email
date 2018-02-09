@@ -3,10 +3,10 @@ class <%= migration_class_name %> < ActiveRecord::Migration<%= migration_version
     create_table :ahoy_messages do |t|
       t.string :token
 
-      # user
+      # acount
       t.text :to
-      t.integer :user_id
-      t.string :user_type
+      t.integer :account_id
+      t.string :account_type
 
       # optional - feel free to remove
       t.string :mailer
@@ -27,6 +27,6 @@ class <%= migration_class_name %> < ActiveRecord::Migration<%= migration_version
     end
 
     add_index :ahoy_messages, [:token]
-    add_index :ahoy_messages, [:user_id, :user_type]
+    add_index :ahoy_messages, [:account_id, :account_type]
   end
 end

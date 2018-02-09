@@ -1,6 +1,6 @@
 require_relative "test_helper"
 
-class UserMailer < ActionMailer::Base
+class AccountMailer < ActionMailer::Base
   default from: "from@example.com"
   after_action :prevent_delivery_to_guests, only: [:welcome2] if Rails.version >= "4.0.0"
 
@@ -56,20 +56,20 @@ class MailerTest < Minitest::Test
   end
 
   def test_no_message
-    UserMailer.welcome3.to
+    AccountMailer.welcome3.to
     assert_equal 0, Ahoy::Message.count
   end
 
   def test_utm_params
-    message = UserMailer.welcome4
+    message = AccountMailer.welcome4
     body = message.body.to_s
     assert_match "utm_campaign=welcome4", body
     assert_match "utm_medium=email", body
-    assert_match "utm_source=user_mailer", body
+    assert_match "utm_source=account_mailer", body
   end
 
   def test_array_params
-    message = UserMailer.welcome5
+    message = AccountMailer.welcome5
     body = message.body.to_s
     assert_match "baz%5B%5D=1&amp;baz%5B%5D=2", body
   end
@@ -77,14 +77,14 @@ class MailerTest < Minitest::Test
   private
 
     def assert_message(method)
-      message = UserMailer.send(method)
+      message = AccountMailer.send(method)
       message.respond_to?(:deliver_now) ? message.deliver_now : message.deliver
       ahoy_message = Ahoy::Message.first
       assert_equal 1, Ahoy::Message.count
       assert_equal "test@example.org", ahoy_message.to
-      assert_equal "UserMailer##{method}", ahoy_message.mailer
+      assert_equal "AccountMailer##{method}", ahoy_message.mailer
       assert_equal "Hello", ahoy_message.subject
-      assert_equal "user_mailer", ahoy_message.utm_source
+      assert_equal "account_mailer", ahoy_message.utm_source
       assert_equal "email", ahoy_message.utm_medium
       assert_equal method.to_s, ahoy_message.utm_campaign
     end
